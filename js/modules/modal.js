@@ -1,27 +1,42 @@
-export default function initModal() {
-  const btnOpen = document.querySelector('[data-modal="abrir"]');
-  const btnClose = document.querySelector('[data-modal="fechar"]');
-  const containerModal = document.querySelector('[data-modal="container"]');
+export default class Modal {
+  constructor(botaoAbrir, botaoFechar, containerModal) {
+    this.botaoAbrir = document.querySelector(botaoAbrir);
+    this.botaoFechar = document.querySelector(botaoFechar);
+    this.containerModal = document.querySelector(containerModal);
 
-  function toggleModal(event) {
-    event.preventDefault();
-    containerModal.classList.toggle('ativo');
+    // Muda a referência do this
+    this.eventToggleModal = this.eventToggleModal.bind(this);
+    this.cliqueForaModal = this.cliqueForaModal.bind(this);
   }
 
-  function closeModal(event) {
-    event.preventDefault();
-    containerModal.classList.remove('ativo');
+  // toggle da class para abrir ou fechar o modal
+  toggleModal() {
+    this.containerModal.classList.toggle('ativo');
   }
 
-  function exitClickToClose(event) {
-    if (event.target === this) {
-      closeModal(event);
+  eventToggleModal(event) {
+    event.preventDefault();
+    this.toggleModal();
+  }
+
+  // fecha o modal ao clicar fora
+  cliqueForaModal(event) {
+    if (event.target === this.containerModal) {
+      this.toggleModal();
     }
   }
 
-  if (btnOpen && btnClose && containerModal) {
-    btnOpen.addEventListener('click', toggleModal);
-    btnClose.addEventListener('click', toggleModal);
-    containerModal.addEventListener('click', exitClickToClose);
+  // adiciona os eventos aos elementos do modal
+  addModalEvents() {
+    this.botaoAbrir.addEventListener('click', this.eventToggleModal);
+    this.botaoFechar.addEventListener('click', this.eventToggleModal);
+    this.containerModal.addEventListener('click', this.cliqueForaModal);
+  }
+
+  init() {
+    if (this.botaoAbrir && this.botaoFechar && this.containerModal) {
+      this.addModalEvents();
+    }
+    return this;
   }
 }
