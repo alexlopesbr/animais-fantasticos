@@ -6,7 +6,7 @@ import Tooltip from './modules/tooltip.js';
 import initDropdownMenu from './modules/dropdown-menu.js';
 import initMenuMobile from './modules/menu-mobile.js';
 import initFuncionamento from './modules/funcionamento.js';
-import initFetchAnimais from './modules/fetch-animais.js';
+import fetchAnimais from './modules/fetch-animais.js';
 import initFetchBitcoin from './modules/fetch-bitcoins.js';
 import initAnimacaoScroll from './modules/animacao-scroll.js';
 
@@ -16,17 +16,10 @@ scrollSuave.init();
 const accordion = new Accordion('[data-anime="accordion"] dt');
 accordion.init();
 
-const tabNav = new TabNav(
-  '[data-tab="menu"] li',
-  '[data-tab="content"] section',
-);
+const tabNav = new TabNav('[data-tab="menu"] li', '[data-tab="content"] section');
 tabNav.init();
 
-const modal = new Modal(
-  '[data-modal="abrir"]',
-  '[data-modal="fechar"]',
-  '[data-modal="container"]',
-);
+const modal = new Modal('[data-modal="abrir"]', '[data-modal="fechar"]', '[data-modal="container"]');
 modal.init();
 
 const tooltip = new Tooltip('[data-tooltip]');
@@ -35,6 +28,7 @@ tooltip.init();
 initDropdownMenu();
 initMenuMobile();
 initFuncionamento();
-initFetchAnimais();
 initFetchBitcoin();
 initAnimacaoScroll();
+
+fetchAnimais('../../animaisapi.json', '.numeros-grid');
